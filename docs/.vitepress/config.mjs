@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/site/',
   title: "SecGuide",
   description: "Защити свои данные правильно",
   lang: 'ru-RU',
