@@ -1,0 +1,48 @@
+/* docs/.vitepress/theme/style.css */
+.vp-doc p,
+.vp-doc li,
+.vp-doc details {
+  font-size: 20px !important; 
+  line-height: 1.7 !important; 
+}
+
+.vp-doc table {
+  font-size: 25px !important;
+}
+.VPSidebarItem.level-0 > .item .text {
+  font-size: 18px !important; 
+  font-weight: 700 !important; 
+}
+
+.VPSidebarItem.level-1 .link .text,
+.VPSidebarItem.level-2 .link .text,
+.VPSidebarItem .VPLink .text {
+  font-size: 16px !important; 
+  line-height: 1.8 !important; 
+}
+
+.VPSidebarItem.level-0 {
+  margin-bottom: 8px !important; 
+}
+
+.VPDocFooter .prev-next .title {
+  /* Используем стандартную переменную бренда. 
+     В светлой теме она синяя, в темной — голубая. */
+  color: var(--vp-c-brand-1) !important; 
+}
+
+/* 2. Текст "Previous page" и "Next page" */
+.VPDocFooter .prev-next .desc {
+  /* Используем переменную вторичного текста. 
+     Она сама станет темно-серой в светлой теме и светло-серой в темной. */
+  color: var(--vp-c-text-2) !important;
+}
+
+/* 3. Если вы ХОТИТЕ, чтобы в ТЕМНОЙ теме текст был именно чисто БЕЛЫМ, 
+      а в светлой оставался стандартным черным: */
+html.dark .VPDocFooter .prev-next .title {
+  color: #ffffff !important;
+}
+html.dark .VPDocFooter .prev-next .desc {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
