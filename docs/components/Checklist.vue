@@ -6,8 +6,10 @@ const props = defineProps({
   items: Array
 })
 
+// Создаём уникальный ID для чек-листа на основе заголовка
 const checklistId = props.title?.replace(/\s/g, '_') || 'default_checklist'
 
+// Загружаем сохранённые значения из localStorage
 function loadFromStorage() {
   const saved = localStorage.getItem(`checklist_${checklistId}`)
   if (saved) {
@@ -16,12 +18,15 @@ function loadFromStorage() {
   return []
 }
 
+// Сохраняем в localStorage
 function saveToStorage(data) {
   localStorage.setItem(`checklist_${checklistId}`, JSON.stringify(data))
 }
 
+// Состояние чек-листа (массив индексов отмеченных пунктов)
 const checked = ref(loadFromStorage())
 
+// Переключаем чек-бокс
 const toggle = (idx) => {
   if (checked.value.includes(idx)) {
     checked.value = checked.value.filter(i => i !== idx)
