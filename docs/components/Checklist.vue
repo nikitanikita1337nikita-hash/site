@@ -6,7 +6,21 @@ const props = defineProps({
   items: Array
 })
 
-const checked = ref([])
+const checklistId = props.title?.replace(/\s/g, '_') || 'default_checklist'
+
+function loadFromStorage() {
+  const saved = localStorage.getItem(`checklist_${checklistId}`)
+  if (saved) {
+    return JSON.parse(saved)
+  }
+  return []
+}
+
+function saveToStorage(data) {
+  localStorage.setItem(`checklist_${checklistId}`, JSON.stringify(data))
+}
+
+const checked = ref(loadFromStorage())
 
 const toggle = (idx) => {
   if (checked.value.includes(idx)) {
@@ -14,6 +28,7 @@ const toggle = (idx) => {
   } else {
     checked.value.push(idx)
   }
+  saveToStorage(checked.value)
 }
 </script>
 
@@ -21,13 +36,17 @@ const toggle = (idx) => {
   <div class="checklist-container">
     <h3>{{ title }}</h3>
     <div class="checklist-items">
-      <label v-for="(item, idx) in items" :key="idx" class="checklist-label">
+      <label 
+        v-for="(item, idx) in items" 
+        :key="idx" 
+        class="checklist-label"
+      >
         <input 
-          type="checkbox" 
+          type="checkbox"
           @change="toggle(idx)"
           :checked="checked.includes(idx)"
         />
-        <span :class="{ 'is-checked': checked.includes(idx) }">
+        <span :class="{'is-checked': checked.includes(idx)}">
           {{ item }}
         </span>
       </label>
@@ -43,25 +62,43 @@ const toggle = (idx) => {
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
 }
+
 .checklist-container h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: var(#fffff);
+  color: var(--vp-c-text-1);
 }
+
 .checklist-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.75rem;
+  padding: 0.5rem;
   cursor: pointer;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
 }
+
+.checklist-label:hover {
+  background-color: var(--vp-c-bg-soft-mute);
+}
+
 .checklist-label input {
-  width: 18px;
-  height: 18px;
+  width: 1.2rem;
+  height: 1.2rem;
   cursor: pointer;
+  accent-color: var(--vp-c-brand-1);
+  flex-shrink: 0;
 }
-.is-checked {
+
+.checklist-label span {
+  font-size: 1rem;
+  color: var(--vp-c-text-1);
+  transition: color 0.2s;
+}
+
+.checklist-label span.is-checked {
   text-decoration: line-through;
-  opacity: 0.6;
+  color: var(--vp-c-text-3);
 }
 </style>
